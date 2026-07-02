@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}DeepDiabetic AI{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f4f8fb; }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+<!-- NAVBAR -->
+<header class="bg-white shadow-md">
+    <div class="container mx-auto flex justify-between items-center p-4">
+        <h1 class="text-2xl font-bold text-blue-700">
+            🩺 DeepDiabetic AI
+        </h1>
+
+        <nav>
+            <ul class="flex space-x-6 items-center text-gray-700 font-medium">
+                <li><a href="/" class="hover:text-blue-600">Home</a></li>
+
+                {% if username %}
+                <li><a href="/upload_image" class="hover:text-blue-600">Upload Scan</a></li>
+                <li><a href="/history" class="hover:text-blue-600">Reports</a></li>
+                <li><a href="/metrics" class="hover:text-blue-600">Analytics</a></li>
+
+                <li class="text-sm text-gray-500">Dr. {{ username }}</li>
+
+                <li>
+                    <a href="/logout" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+                        Logout
+                    </a>
+                </li>
+                {% else %}
+                <li><a href="/login" class="hover:text-blue-600">Login</a></li>
+                <li>
+                    <a href="/register" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        Register
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="bg-gradient-to-r from-blue-600 to-teal-500 text-white py-16">
+    <div class="container mx-auto grid md:grid-cols-2 gap-10 items-center px-6">
+
+        <div>
+            <h2 class="text-4xl font-bold leading-tight mb-4">
+                AI-Powered Diabetic Retinopathy Detection
+            </h2>
+
+            <p class="text-lg mb-6">
+                Early detection saves vision. Upload retinal images and get instant,
+                accurate predictions powered by deep learning models.
+            </p>
+
+            <a href="/upload_image"
+               class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100">
+                Start Diagnosis →
+            </a>
+        </div>
+
+        <div class="hidden md:block">
+            <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png"
+                 class="w-80 mx-auto">
+        </div>
+
+    </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="container mx-auto px-6 py-12 flex-grow">
+
+    {% block content %}
+
+    <!-- Default Home Content -->
+    <h3 class="text-2xl font-semibold text-gray-800 mb-8 text-center">
+        System Features
+    </h3>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="bg-white shadow-lg rounded-xl p-6 text-center">
+            👁️ Retina Analysis
+        </div>
+
+        <div class="bg-white shadow-lg rounded-xl p-6 text-center">
+            📊 Detailed Reports
+        </div>
+
+        <div class="bg-white shadow-lg rounded-xl p-6 text-center">
+            ⚡ Real-Time Results
+        </div>
+
+    </div>
+
+    {% endblock %}
+
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-gray-300 py-6 text-center">
+    <p>© 2025 DeepDiabetic AI | SRITW Project Team</p>
+</footer>
+
+</body>
+</html>

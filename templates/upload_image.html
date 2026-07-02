@@ -1,0 +1,21 @@
+{% extends "_base.html" %}
+
+{% block title %}Upload Fundus Image - DeepDiabetic{% endblock %}
+
+{% block content %}
+<h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Upload Fundus Image for Analysis</h2>
+
+<form action="/upload_image" method="post" enctype="multipart/form-data" class="max-w-xl mx-auto bg-gray-50 p-8 rounded-lg shadow-md">
+    <div class="mb-5">
+        <label for="fundus_image" class="block text-gray-700 text-sm font-bold mb-2">Select Fundus Image:</label>
+        <input type="file" name="fundus_image" id="fundus_image" accept=".png, .jpg, .jpeg" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" required>
+        <p class="mt-1 text-sm text-gray-500" id="file_input_help">Only .png, .jpg, .jpeg files are allowed.</p>
+    </div>
+
+    <div class="flex items-center justify-center">
+        <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-300 transform hover:scale-105" style="color: black;">
+            Analyze Image
+        </button>
+    </div>
+</form>
+{% endblock %}

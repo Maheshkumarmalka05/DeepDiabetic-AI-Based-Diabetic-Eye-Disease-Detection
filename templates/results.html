@@ -1,0 +1,81 @@
+{% extends "_base.html" %}
+
+{% block title %}Analysis Results - DeepDiabetic{% endblock %}
+
+{% block content %}
+<h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Fundus Image Analysis Report</h2>
+
+{% if image and results %}
+<div class="grid md:grid-cols-2 gap-8">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Original Image</h3>
+        <div class="flex justify-center items-center h-64 bg-gray-100 rounded-lg overflow-hidden">
+            {% if image.filepath %}
+            <img src="{{ url_for('static', filename='../' + image.filepath) }}" alt="Uploaded Fundus Image" class="max-h-full max-w-full object-contain">
+            {% else %}
+            <p class="text-gray-500">Image not available.</p>
+            {% endif %}
+        </div>
+        <p class="text-sm text-gray-500 mt-2 text-center">Filename: {{ image.original_filename }}</p>
+        <p class="text-sm text-gray-500 text-center">Uploaded by: {{ image.uploaded_by }} on {{ image.upload_date.split('T')[0] }}</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">DeepDiabetic Findings</h3>
+        <div class="mb-4">
+            <p class="text-lg font-semibold text-teal-700">Diabetic Retinopathy Severity:</p>
+            <p class="text-xl text-gray-800">
+                <span class="font-bold">{{ results.dr_severity }}</span>
+                <span class="text-sm text-gray-600 ml-2">(Confidence: {{ results.dr_confidence * 100 }}%)</span>
+            </p>
+        </div>
+        <div class="mb-4">
+            <p class="text-lg font-semibold text-teal-700">Diabetic Macular Edema (DME):</p>
+            <p class="text-xl text-gray-800">
+                <span class="font-bold">{{ results.dme_status }}</span>
+                <span class="text-sm text-gray-600 ml-2">(Confidence: {{ results.dme_confidence * 100 }}%)</span>
+            </p>
+        </div>
+        <div class="mb-4">
+            <p class="text-lg font-semibold text-teal-700">Other Conditions:</p>
+            <ul class="list-disc list-inside text-gray-700">
+                {% for condition in results.other_conditions %}
+                    <li>
+                        {{ condition.name }}:
+                        <span class="font-semibold {% if condition.detected %}text-red-600{% else %}text-green-600{% endif %}">
+                            {{ "Detected" if condition.detected else "Not Detected" }}
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="mb-4">
+            <p class="text-lg font-semibold text-teal-700">Processing Time:</p>
+            <p class="text-gray-800">{{ results.processing_time_ms / 1000 }} seconds</p>
+        </div>
+        <div>
+            <p class="text-lg font-semibold text-teal-700">Explainability:</p>
+            <p class="text-gray-800">{{ results.explainability_info }}</p>
+            <p class="text-sm text-gray-600 mt-1">
+                (In a real system, a visual heatmap image would be displayed here to show areas of interest.)
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="mt-8 text-center">
+    <a href="{{ url_for('upload_image') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+        Analyze Another Image
+    </a>
+    <a href="{{ url_for('history') }}" class="ml-4 inline-block bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+        View Analysis History
+    </a>
+</div>
+
+{% else %}
+<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-6" role="alert">
+    <strong class="font-bold">No Results Found!</strong>
+    <span class="block sm:inline">Could not retrieve analysis for this image. Please check your history or upload a new image.</span>
+</div>
+{% endif %}
+{% endblock %}

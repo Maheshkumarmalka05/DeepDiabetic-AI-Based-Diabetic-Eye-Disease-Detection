@@ -1,0 +1,25 @@
+{% extends "_base.html" %}
+{% block content %}
+
+<h2 class="text-3xl font-bold text-center mb-6">Login</h2>
+
+<form method="post" class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-xl">
+
+    <input type="text" name="username" placeholder="Username"
+           class="w-full mb-4 p-3 border rounded-lg" required>
+
+    <input type="password" name="password" placeholder="Password"
+           class="w-full mb-4 p-3 border rounded-lg" required>
+
+    <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">
+        Login
+    </button>
+
+    <p class="text-center mt-4">
+        Don't have an account?
+        <a href="/register" class="text-blue-600">Register</a>
+    </p>
+
+</form>
+
+{% endblock %}
